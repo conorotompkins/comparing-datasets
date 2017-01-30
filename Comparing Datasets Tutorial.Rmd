@@ -43,7 +43,7 @@ library(tidyverse)
 
 Create a folder somewhere called "\comparing datasets"
 
-Download the roster_1516.csv and roster_1617 files to that folder
+Download the roster_1516.csv and roster_1617 files to that folder (from https://github.com/conorotompkins/comparing-datasets)
 
 Set your working directory to that folder:
 
@@ -59,7 +59,7 @@ That's my working directory. Yours should be whatever your new folder is.
 
 Read the CSVs into R
 ```{r read CSVs}
-roster_1516 <- read.csv("roster_1516.csv") #THis read the the CSV into R and creates a dataframe called "roster_1516"
+roster_1516 <- read.csv("roster_1516.csv") #This read the the CSV into R and creates a dataframe called "roster_1516"
 roster_1617 <- read.csv("roster_1617.csv")
 ```
 
@@ -83,7 +83,16 @@ First, check the classes of the columns of roster_1516
 str(roster_1516)
 ```
 
-The Player column (roster_1$Player) is a factor (fct). It needs to be a character (chr) so we can work with it
+What does str() do?
+```{r str help, eval = FALSE}
+?str
+```
+
+Type "?" in front of an R command (without any () at the end) to get help
+
+Then look at the bottom right panel
+
+The Player column (roster_1516$Player) is a factor (fct). It needs to be a character (chr) so we can work with it
 ```{r as character 1516}
 roster_1516$Player <- as.character(roster_1516$Player)
 ```
@@ -94,7 +103,7 @@ is.character(roster_1516$Player)
 
 Now, check the classes of the columns of roster_1617
 ```{r check roster_1617}
-str(roster_1617)#roster_2$Player is a factor (fct). It needs to be a character (chr)
+str(roster_1617)
 roster_1617$Player <- as.character(roster_1617$Player)
 is.character(roster_1617$Player)
 ```
@@ -120,11 +129,17 @@ That's because
 "Matt Murray" == "Matthew Murray"
 ```
 
-Let's add add a "check column to roster_1516
+Let's add add a "check"" column to roster_1516
 ```{r add check column}
 roster_1516 <- roster_1516 %>% #Make changes to roster_1516 and assign it back to roster_1516
   mutate(check = Player %in% roster_1617$Player) #Create a new column "check" that checks if the rows in Player column from roster_1516 match the rows in roster_1617
 ```
+
+View this dataframe
+```{r view}
+View(roster_1516)
+```
+R is case-sensetive. view() will not work
 
 Now create a new dataframe with just the matches
 ```{r new dataframe}
@@ -141,4 +156,3 @@ View the first 10 rows of new_dataframe
 ```{r head}
 head(new_dataframe)
 ```
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
