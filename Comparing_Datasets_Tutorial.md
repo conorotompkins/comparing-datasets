@@ -147,6 +147,8 @@ str(roster_1617)
     ##  $ Summary   : Factor w/ 27 levels "0-0-0, 0.00 GAA",..: 25 17 1 16 27 18 5 24 10 4 ...
     ##  $ Salary    : Factor w/ 22 levels "$1,000,000","$1,400,000",..: 5 6 22 3 1 7 19 4 12 13 ...
 
+Do the same for roster\_1617
+
 ``` r
 roster_1617$Player <- as.character(roster_1617$Player)
 is.character(roster_1617$Player)
@@ -253,7 +255,7 @@ roster_1516[which(!(roster_1516$Player %in% roster_1617$Player)), ]
 But what about Matt Murray?
 
 ``` r
-roster_1516[grep("Murray", roster_1516$Player), ] #"grep" Searches the Player column for a string containing "Murray"
+roster_1516[grep("Murray", roster_1516$Player), ]
 ```
 
     ##    No.      Player Flag Pos Age  Ht  Wt S.C Exp   Birth.Date
@@ -269,6 +271,8 @@ roster_1617[grep("Murray", roster_1617$Player), ]
     ## 20  30 Matthew Murray   ca   G  22 6-4 178 -/-   1 May 25, 1994
     ##             Summary   Salary
     ## 20 17-6-1, 2.42 GAA $575,000
+
+"grep" searches the Player column for a string containing "Murray"
 
 That's because
 
@@ -328,3 +332,9 @@ head(new_dataframe)
     ## 4 16 G, 16 A, 32 P  TRUE
     ## 5  6 G, 16 A, 22 P  TRUE
     ## 6  0 G, 16 A, 16 P  TRUE
+
+Save new\_dataframe as a a new CSV in your working directory
+
+``` r
+write.csv(new_dataframe, "new_dataframe.csv")
+```

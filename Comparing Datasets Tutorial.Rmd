@@ -92,6 +92,8 @@ Type "?" in front of an R command (without any () at the end) to get help
 
 Then look at the bottom right panel
 
+
+
 The Player column (roster_1516$Player) is a factor (fct). It needs to be a character (chr) so we can work with it
 ```{r as character 1516}
 roster_1516$Player <- as.character(roster_1516$Player)
@@ -104,6 +106,10 @@ is.character(roster_1516$Player)
 Now, check the classes of the columns of roster_1617
 ```{r check roster_1617}
 str(roster_1617)
+```
+
+Do the same for roster_1617
+```{r fix roster_1617}
 roster_1617$Player <- as.character(roster_1617$Player)
 is.character(roster_1617$Player)
 ```
@@ -120,9 +126,10 @@ roster_1516[which(!(roster_1516$Player %in% roster_1617$Player)), ]
 
 But what about Matt Murray?
 ```{r matt murray}
-roster_1516[grep("Murray", roster_1516$Player), ] #"grep" Searches the Player column for a string containing "Murray"
+roster_1516[grep("Murray", roster_1516$Player), ]
 roster_1617[grep("Murray", roster_1617$Player), ]
 ```
+"grep" searches the Player column for a string containing "Murray"
 
 That's because
 ```{r murray check}
@@ -156,3 +163,7 @@ View the first 10 rows of new_dataframe
 ```{r head}
 head(new_dataframe)
 ```
+
+Save new_dataframe as a a new CSV in your working directory
+```{r write csv, eval = FALSE}
+write.csv(new_dataframe, "new_dataframe.csv")
