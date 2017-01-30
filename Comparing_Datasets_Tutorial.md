@@ -254,6 +254,8 @@ roster_1516[which(!(roster_1516$Player %in% roster_1617$Player)), ]
 
 But what about Matt Murray?
 
+"grep" searches the Player column for a string containing "Murray"
+
 ``` r
 roster_1516[grep("Murray", roster_1516$Player), ]
 ```
@@ -271,8 +273,6 @@ roster_1617[grep("Murray", roster_1617$Player), ]
     ## 20  30 Matthew Murray   ca   G  22 6-4 178 -/-   1 May 25, 1994
     ##             Summary   Salary
     ## 20 17-6-1, 2.42 GAA $575,000
-
-"grep" searches the Player column for a string containing "Murray"
 
 That's because
 
