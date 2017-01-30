@@ -1,0 +1,98 @@
+---
+title: "Comparing Datasets"
+author: "Conor Tompkins"
+date: "January 30, 2017"
+output:
+  md_document:
+    variant: markdown_github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Comparing Datasets in R
+
+To use this, you'll need to install R (https://cran.r-project.org/) and RStudio (https://www.rstudio.com/products/rstudio/download/)
+Use the standard installation options
+
+Open RStudio.
+
+The top left area is the "Source" panel. This is where you enter and edit code.
+THe bottom left area is the "Console" panel. This is where the output from your code goes.
+The top right area is the "Environment/History" panel. This is where you can see your data objects
+The bottom right area is the "Files/Plots/etc." panel. We won't be using this for now, but that's where your graphs and help queries show up.
+
+
+
+
+In R, enter this code in the Source panel. Select the code and hit CTRL+Enter to run the code and install the package we'll need for this tutorial
+``` {r install packages, eval = FALSE}
+install.packages("tidyverse")
+```
+
+Create a folder somewhere called "\comparing datasets"
+Download the roster_1516.csv and roster_1617 files to that folder
+
+Set your working directory to that folder
+
+Top menu bar -> Session -> Set Working Directory -> Choose Directory
+
+That tells R where to look for the files, and where to save any files you create in R
+Confirm this using
+
+```{r getwd}
+getwd()
+```
+
+Read the CSVs into R
+```{r read CSVs}
+roster_1516 <- read.csv("roster_1516.csv")
+roster_1617 <- read.csv("roster_1617.csv")
+```
+
+Then run this to confirm R has them.Also check the Environment panel.
+```{r confirm CSVs}
+ls()
+```
+This lists all the data objects in your environment
+
+
+THe format of data in R is very important
+First, check the classes of the columns of roster_1516
+```{r check roster1516}
+str(roster_1516) #roster_1$Player is a factor (fct). It needs to be a character (chr)
+roster_1516$Player <- as.character(roster_1516$Player)
+is.character(roster_1516$Player)
+```
+
+#Check classes of roster_2
+str(roster_1617)#roster_2$Player is a factor (fct). It needs to be a character (chr)
+roster_1617$Player <- as.character(roster_1617$Player)
+is.character(roster_1617$Player)
+
+#Which players from 1516 are in the roster for 1617?
+roster_1516[which(roster_1516$Player %in% roster_1617$Player), ]
+
+#Which players from 1516 are NOT (!) in the roster for 1617?
+roster_1516[which(!(roster_1516$Player %in% roster_1617$Player)), ]
+
+#But what about Matt Murray?
+roster_1516[grep("Murray", roster_1516$Player), ]
+roster_1617[grep("Murray", roster_1617$Player), ]
+
+"Matt Murray" == "Matthew Murray"
+
+
+#Adding a check column to a dataframe
+roster_1516 <- roster_1516 %>% #Make changes to roster_1516 and assign it back to roster_1516
+  mutate(check = Player %in% roster_1617$Player) #Create a new column that checks if the rows in Player column from roster_1516 match the rows in roster_1617
+
+#Create a new dataframe with just the matches
+new_dataframe <- roster_1516 %>% #Make changes to roster_1516 and assign it to a new object, new_dataframe
+  filter(check == TRUE) #Filter only the rows where the check column is TRUE
+
+#View the first 10 rows of new_dataframe
+head(new_dataframe)
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
