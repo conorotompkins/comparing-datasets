@@ -1,7 +1,9 @@
 Comparing Datasets in R
 -----------------------
 
-To use this, you'll need to install R (<https://cran.r-project.org/>) and RStudio (<https://www.rstudio.com/products/rstudio/download/>)
+To use this, you'll need to install:
+
+-R (<https://cran.r-project.org/>) -RStudio (<https://www.rstudio.com/products/rstudio/download/>)
 
 Use the standard installation options
 
@@ -9,13 +11,13 @@ Open RStudio.
 
 The top left area is the "Source" panel. This is where you enter and edit code.
 
-THe bottom left area is the "Console" panel. This is where the output from your code goes.
+The bottom left area is the "Console" panel. This is where the output from your code goes.
 
 The top right area is the "Environment/History" panel. This is where you can see your data objects.
 
 The bottom right area is the "Files/Plots/etc." panel. We won't be using this for now, but that's where your graphs and help queries show up.
 
-In R, enter this code in the Source panel. Select the code and hit CTRL+Enter to run the code and install the package we'll need for this tutorial
+In RStudio, enter this code in the Source panel. Select the code and hit CTRL+Enter to run the code and install the package we'll need for this tutorial
 
 ``` r
 install.packages("tidyverse")
@@ -39,19 +41,25 @@ library(tidyverse)
     ## filter(): dplyr, stats
     ## lag():    dplyr, stats
 
-Create a folder somewhere called "datasets" Download the roster\_1516.csv and roster\_1617 files to that folder
+Create a folder somewhere called "datasets"
 
-Set your working directory to that folder
+Download the roster\_1516.csv and roster\_1617 files to that folder
 
-Top menu bar -&gt; Session -&gt; Set Working Directory -&gt; Choose Directory
+Set your working directory to that folder:
 
-That tells R where to look for the files, and where to save any files you create in R Confirm this using
+-Top menu bar -&gt; Session -&gt; Set Working Directory -&gt; Choose Directory
+
+That tells R where to look for the files, and where to save any files you create in R
+
+Confirm this using
 
 ``` r
 getwd()
 ```
 
     ## [1] "C:/Users/conor/githubfolder/comparing-datasets"
+
+That's my working directory. Yours should be whatever your new folder is.
 
 Read the CSVs into R
 
@@ -60,7 +68,9 @@ roster_1516 <- read.csv("roster_1516.csv")
 roster_1617 <- read.csv("roster_1617.csv")
 ```
 
-Then run this to confirm R has them.Also check the Environment panel.
+Then run this to confirm R has them.
+
+Also check the Environment panel.
 
 ``` r
 ls()
@@ -70,10 +80,12 @@ ls()
 
 This lists all the data objects in your environment
 
-THe format of data in R is very important First, check the classes of the columns of roster\_1516
+The format of data in R is very important
+
+First, check the classes of the columns of roster\_1516
 
 ``` r
-str(roster_1516) #roster_1$Player is a factor (fct). It needs to be a character (chr)
+str(roster_1516)
 ```
 
     ## 'data.frame':    39 obs. of  11 variables:
@@ -89,8 +101,15 @@ str(roster_1516) #roster_1$Player is a factor (fct). It needs to be a character 
     ##  $ Birth.Date: Factor w/ 39 levels "April 20, 1988",..: 34 30 1 33 12 7 29 35 38 4 ...
     ##  $ Summary   : Factor w/ 35 levels "0 G, 0 A, 0 P",..: 1 31 35 2 3 22 13 30 4 17 ...
 
+The Player column (roster\_1$Player) is a factor (fct). It needs to be a character (chr) so we can work with it
+
 ``` r
 roster_1516$Player <- as.character(roster_1516$Player)
+```
+
+Now check if R thinks roster\_1516$Player is a character class column
+
+``` r
 is.character(roster_1516$Player)
 ```
 
@@ -222,7 +241,7 @@ roster_1516[which(!(roster_1516$Player %in% roster_1617$Player)), ]
 But what about Matt Murray?
 
 ``` r
-roster_1516[grep("Murray", roster_1516$Player), ] #Searches the Player column for a string containing "Murray"
+roster_1516[grep("Murray", roster_1516$Player), ] #"grep" Searches the Player column for a string containing "Murray"
 ```
 
     ##    No.      Player Flag Pos Age  Ht  Wt S.C Exp   Birth.Date
@@ -247,11 +266,11 @@ That's because
 
     ## [1] FALSE
 
-Let's add add a "check"" column to roster\_1516
+Let's add add a "check column to roster\_1516
 
 ``` r
 roster_1516 <- roster_1516 %>% #Make changes to roster_1516 and assign it back to roster_1516
-  mutate(check = Player %in% roster_1617$Player) #Create a new column that checks if the rows in Player column from roster_1516 match the rows in roster_1617
+  mutate(check = Player %in% roster_1617$Player) #Create a new column "check" that checks if the rows in Player column from roster_1516 match the rows in roster_1617
 ```
 
 Now create a new dataframe with just the matches
@@ -260,6 +279,14 @@ Now create a new dataframe with just the matches
 new_dataframe <- roster_1516 %>% #Make changes to roster_1516 and assign it to a new object, new_dataframe
   filter(check == TRUE) #Filter only the rows where the check column is TRUE
 ```
+
+You should have a new object "new\_dataframe" in your environment
+
+``` r
+ls()
+```
+
+    ## [1] "new_dataframe" "roster_1516"   "roster_1617"
 
 View the first 10 rows of new\_dataframe
 
