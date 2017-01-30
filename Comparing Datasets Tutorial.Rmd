@@ -15,8 +15,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 To use this, you'll need to install:
 
--R (https://cran.r-project.org/)
--RStudio (https://www.rstudio.com/products/rstudio/download/)
+R (https://cran.r-project.org/)
+RStudio (https://www.rstudio.com/products/rstudio/download/)
 
 Use the standard installation options
 
@@ -47,8 +47,7 @@ Download the roster_1516.csv and roster_1617 files to that folder
 
 Set your working directory to that folder:
 
-
--Top menu bar -> Session -> Set Working Directory -> Choose Directory
+Top menu bar -> Session -> Set Working Directory -> Choose Directory
 
 That tells R where to look for the files, and where to save any files you create in R
 
@@ -60,25 +59,30 @@ That's my working directory. Yours should be whatever your new folder is.
 
 Read the CSVs into R
 ```{r read CSVs}
-roster_1516 <- read.csv("roster_1516.csv")
+roster_1516 <- read.csv("roster_1516.csv") #THis read the the CSV into R and creates a dataframe called "roster_1516"
 roster_1617 <- read.csv("roster_1617.csv")
 ```
 
 Then run this to confirm R has them.
 
-Also check the Environment panel.
+
 ```{r confirm CSVs}
 ls()
 ```
 This lists all the data objects in your environment
 
+Also check the Environment panel
+
 
 The format of data in R is very important
+
+If the class is not right, your code won't work
 
 First, check the classes of the columns of roster_1516
 ```{r check roster_1516}
 str(roster_1516)
 ```
+
 The Player column (roster_1$Player) is a factor (fct). It needs to be a character (chr) so we can work with it
 ```{r as character 1516}
 roster_1516$Player <- as.character(roster_1516$Player)

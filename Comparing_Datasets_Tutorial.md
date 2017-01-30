@@ -3,7 +3,7 @@ Comparing Datasets in R
 
 To use this, you'll need to install:
 
--R (<https://cran.r-project.org/>) -RStudio (<https://www.rstudio.com/products/rstudio/download/>)
+R (<https://cran.r-project.org/>) RStudio (<https://www.rstudio.com/products/rstudio/download/>)
 
 Use the standard installation options
 
@@ -47,7 +47,7 @@ Download the roster\_1516.csv and roster\_1617 files to that folder
 
 Set your working directory to that folder:
 
--Top menu bar -&gt; Session -&gt; Set Working Directory -&gt; Choose Directory
+Top menu bar -&gt; Session -&gt; Set Working Directory -&gt; Choose Directory
 
 That tells R where to look for the files, and where to save any files you create in R
 
@@ -64,13 +64,11 @@ That's my working directory. Yours should be whatever your new folder is.
 Read the CSVs into R
 
 ``` r
-roster_1516 <- read.csv("roster_1516.csv")
+roster_1516 <- read.csv("roster_1516.csv") #THis read the the CSV into R and creates a dataframe called "roster_1516"
 roster_1617 <- read.csv("roster_1617.csv")
 ```
 
 Then run this to confirm R has them.
-
-Also check the Environment panel.
 
 ``` r
 ls()
@@ -80,7 +78,11 @@ ls()
 
 This lists all the data objects in your environment
 
+Also check the Environment panel
+
 The format of data in R is very important
+
+If the class is not right, your code won't work
 
 First, check the classes of the columns of roster\_1516
 
